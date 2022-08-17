@@ -24,12 +24,10 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 
-
 def get_fruityvice_data(this_fruit_choise):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
-
 
 streamlit.header("Fruityvice Fruit Advice!")
 try:
@@ -55,7 +53,7 @@ if streamlit.button("Get Fruit List"):
     my_data_rows = get_fruit_load_list()
     streamlit.dataframe(my_data_rows)
 
-streamlit.stop()
+#streamlit.stop()
 
 def insert_row_snowflake(new_fruit):
     with my_cnx.cursor() as my_cur:
@@ -67,5 +65,3 @@ if streamlit.button("Add a Fruit to the List"):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     back_from_function = insert_row_snowflake(add_my_fruit)
     streamlit.write(back_from_function)
-
-
